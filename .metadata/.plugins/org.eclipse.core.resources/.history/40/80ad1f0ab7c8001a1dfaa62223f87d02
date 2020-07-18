@@ -1,0 +1,90 @@
+package task_1;
+import java.util.*;
+
+public class Programs {
+	
+	public class Program{
+		public String title;
+		public int priority;
+		public boolean status;
+		
+		public Program(String title, int priority, boolean status) {
+			this.title = title;
+			this.priority = priority;
+			this.status = status;
+		}
+	}
+	
+	public List<Program> programs;
+	
+	public Programs() {
+		programs = new ArrayList<Program>();
+	}
+	
+	public Programs(List<Program> programs) {
+		programs = programs;
+	}
+	
+	public void print() {
+		for(Program p : programs) {
+			System.out.print(p.title);
+			System.out.print(" ");
+			if(p.priority==1)
+				System.out.print("High");
+			else if(p.priority==2)
+				System.out.print("Medium");
+			else if(p.priority==3)
+				System.out.print("Low");
+			System.out.print(" ");
+			System.out.print(p.status?"Available":"Not Available");
+			System.out.println("");
+		}
+	}
+	
+	public void sort() {
+		//quick sort
+		sort(programs, 0, programs.size()-1, false);
+		
+	}
+	
+	private void sort(List<Program> list, int start, int end, boolean desc) {
+		if(start>=end) return;
+		int i = start;
+		int j = end;
+		int a = start;
+		while(true) {
+			while(i<j) {
+				if(list.get(j).priority<list.get(a).priority) {
+					Program tmp = list.get(j);
+					list.set(j, list.get(a));
+					list.set(a, list.get(j));
+					break;
+				}
+				j--;
+			}
+			
+			while(i<j) {
+				if(list.get(i).priority>list.get(a).priority) {
+					Program tmp = list.get(i);
+					list.set(i, list.get(a));
+					list.set(a, list.get(j));
+					break;
+				}
+				i++;
+			}
+			if(i==j) {
+				sort(list, start, i-1, desc);
+				sort(list, i+1, end, desc);
+				return;
+			}
+		}
+	}
+	
+	public List<Program> query(int priority, boolean availability) {
+		List<Program> res = null;
+		for(Program p : programs) {
+			
+		}
+		return null;
+	}
+}

@@ -1,0 +1,26 @@
+package task_1;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+import task_1.Programs;
+
+public class Main {
+	 public static void main(String[] args) {
+		 Programs programs = new Programs();
+		 List<Programs.Program> list = new ArrayList<Programs.Program>();
+		 Programs.Program p1 = programs.new Program("Information Technology",1,true);
+		 BufferedReader reader;
+		 try {
+			 reader = new BufferedReader(new FileReader(System.getProperty("user.dir")));
+			 String line = reader.readLine();
+			 while(line != null) {
+				 System.out.println(line);
+				 line = reader.readLine();
+			 }
+			 reader.close();
+		 }catch (IOException e) {
+			 e.printStackTrace();
+		 }
+	 }
+}

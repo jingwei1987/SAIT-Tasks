@@ -1,0 +1,16 @@
+body{
+	padding: 20px;
+	text-align: center;
+}
+#container{
+	text-align: left;
+	line-height: 25px;
+}
+.err{
+	color: red;
+	font-size: 12px;
+	display: none;
+}
+#result{
+	width: 100%;
+}

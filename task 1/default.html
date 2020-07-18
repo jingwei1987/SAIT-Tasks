@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div id="container">
+		<table id="infotable">
+		</table>
+		<div class="commands">
+			<input type="button" name="" value="Sort By" id="btn_sort"/>&nbsp;
+			<input type="radio" name="sort_by" id="rb_title"/>Title&nbsp;
+			<input type="radio" name="sort_by" id="rb_priority" checked="true" />Priority&nbsp;
+			<input type="radio" name="sort_by" id="rb_status" />Status&nbsp;
+			<br><br>
+			<input type="button" name="" value="Pull By" id="btn_pull"/>&nbsp;
+			<select id="sel_priority">
+				<option value="1">High</option>
+				<option value="2">Medium</option>
+				<option value="3">Low</option>
+			</select>&nbsp;
+			<select id="sel_status">
+				<option value="0">Not Available</option>
+				<option value="1">Available</option>
+			</select>
+		</div>
+		<table id="resulttable">
+		</table>
+	</div>
+</body>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+
+	function getStatus(status){
+		if(status) return "Available";
+		else return "Not Available";
+	}
+
+	function reload(){
+		$("#infotable").html("<tr><td>Program Title</td><td>Priority (High = 1, Medium = 2, low = 3)</td><td>Status</td></tr>");
+		$.each(data, function(index, item){
+			$("#infotable").append("<tr><td>"+item.title+"</td><td>"+item.priority+"</td><td>"+getStatus(item.status)+"</td></tr>");
+			
+		});
+	}
+
+	function sort(){
+		//customized comparator
+		data.sort(function(a, b) {
+			if($("#rb_title").prop('checked'))
+				return a.title.localeCompare(b.title);
+			if($("#rb_priority").prop('checked'))
+				return a.priority - b.priority;
+			return a.status - b.status;
+		});
+	}
+
+	function search(){
+		$("#resulttable").html("<tr><td>Program Title</td><td>Priority (High = 1, Medium = 2, low = 3)</td><td>Status</td></tr>");
+		$.each(data, function(index, item){
+			if(item.priority == $("#sel_priority").val() && 
+				item.status == $("#sel_status").val())
+				$("#resulttable").append("<tr><td>"+item.title+"</td><td>"+item.priority+"</td><td>"+getStatus(item.status)+"</td></tr>");
+			
+		});
+	}
+
+	reload();
+
+	$("#btn_sort").on("click",function(){
+		sort();
+		reload();
+	});
+
+	$("#btn_pull").on("click",function(){
+		search();
+	});
+
+</script>

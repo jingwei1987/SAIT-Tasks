@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<head>
+	<title>Task 2 - Wage Calculator</title>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div id="container">
+		<h2>Please enter your salary information</h1>
+		Salary: $&nbsp;
+		<input id="input_salary" type="number" value="30"/>&nbsp;&nbsp;
+		<select id="sel_type">
+			<option value="0" selected>Hourly</option>
+			<option value="1">Weekly</option>
+			<option value="2">Monthly</option>
+			<option value="3">Annual</option>
+		</select>&nbsp;
+		<span class="err">Please make sure the salary is larger than 0</span>
+		<br>
+		Hours per week: 
+		<input id="input_hpw" type="number" value="40" />&nbsp;
+		<span class="err">Please make sure the hours between 0-168</span>
+		<br>
+		Days per week
+		<input id="input_dpw" type="number" value="5" />&nbsp;
+		<span class="err">Please make sure the days between 0-7</span>
+		<br>
+		Vacations per year
+		<input id="input_vpy" type="number" value="10" />&nbsp;
+		<span class="err">Please make sure the days between 0-365</span>
+		<br>
+		Holidays per year
+		<input id="input_hpy" type="number" value="10" />&nbsp;
+		<span class="err">Please make sure the days between 0-365</span>
+		<br>
+		<input type="button" id="btn_calculate" value="Calculate" />
+		<br><br>
+		<table id="result"></table>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript">
+	function checkSalary(){
+		if($("#input_salary").val()>=0) return true;
+		else return false;
+	}
+
+	function checkHpw(){
+		if($("#input_hpw").val()>=0 && $("#input_hpw").val()<=168) return true;
+		else return false;
+	}
+
+	function checkDpw(){
+		if($("#input_dpw").val()>=0 && $("#input_dpw").val()<=7) return true;
+		else return false;
+	}
+
+	function checkVpy(){
+		if($("#input_vpy").val()>=0 && $("#input_vpy").val()<=365) return true;
+		else return false;
+	}
+
+	function checkHpy(){
+		if($("#input_hpy").val()>=0 && $("#input_hpy").val()<=365) return true;
+		else return false;
+	}
+
+	function calculate(){
+		var salary = $("#input_salary").val();
+		var type = $("#sel_type").val();
+		var hpw = $("#input_hpw").val(); //hours per week
+		var dpw = $("#input_dpw").val(); //days per week
+		var vpy = $("#input_vpy").val(); //vacations per year
+		var hpy = $("#input_hpy").val(); //holidays per year
+
+		var sph = 0; //salary per hour
+		var spw = 0; //salary per week
+		var spm = 0; //salary per month
+		var spy = 0; //salary per year
+		var spd = 0; //salary per day
+		var totalWorkDays = parseInt(365/7*dpw)-vpy-hpy; //total work days of a year
+		if(type == 0){
+			sph = salary;
+			spw = hpw*sph;
+			spd = spw/dpw;
+			spy = totalWorkDays*spd;
+			spm = spy/12;
+			spw = spy/(365/7);
+			sph = spw/hpw;
+		}else if(type == 1){
+			spw = salary;
+			sph = spw/hpw;
+			spd = spw/dpw;
+			spy = totalWorkDays*spd;
+			spm = spy/12;
+			spw = spy/(365/7);
+			sph = spw/hpw;
+		}else if(type == 2){
+			spm = salary;
+			spy = spm*12;
+			spw = spy/(365/7);
+			sph = spw/hpw;
+			spd = spw/dpw;
+			spy = totalWorkDays*spd;
+			spm = spy/12;
+			spw = spy/(365/7);
+			sph = spw/hpw;
+		}else if(type == 3){
+			spy = salary;
+			spw = spy/(365/7);
+			sph = spw/hpw;
+			spd = spw/dpw;
+			spy = totalWorkDays*spd;
+			spm = spy/12;
+			spw = spy/(365/7);
+			sph = spw/hpw;
+		}
+
+		//When given data in all the fields, it should give us a result which has hourly/weekly/monthly/annual salary. Salary of vacation and holidays should be adjusted/ subtracted from the salary.
+
+		//as the description of this task isn't very clear about the logic to handle vacations and holidays, I hereby assume that the calculator will re-calculate all the salaries after the deduction of the vacations and holidays so that the output will always be smaller than what the user has inputted.
+
+		showResult(parseFloat(sph).toFixed(2), parseFloat(spw).toFixed(2), parseFloat(spm).toFixed(2), parseFloat(spy).toFixed(2));
+	}
+
+	function showResult(sph, spw, spm, spy){
+		$("#result").html("<tr><td>Hourly Salary</td><td>Weekly Salary</td><td>Monthly Salary</td><td>Annual Salary</td></tr>")
+		$("#result").append("<tr><td>"+sph+"</td><td>"+spw+"</td><td>"+spm+"</td><td>"+spy+"</td></tr>")
+	}
+
+	$("#input_salary").on("change",function(){
+		if(!checkSalary()) $(this).next().next(".err").show();
+		else $(this).next().next(".err").hide();
+	});
+
+	$("#input_hpw").on("change",function(){
+		if(!checkHpw()) $(this).next(".err").show();
+		else $(this).next(".err").hide();
+	});
+
+	$("#input_dpw").on("change",function(){
+		if(!checkDpw()) $(this).next(".err").show();
+		else $(this).next(".err").hide();
+	});
+
+	$("#input_vpy").on("change",function(){
+		if(!checkVpy()) $(this).next(".err").show();
+		else $(this).next(".err").hide();
+	});
+
+	$("#input_hpy").on("change",function(){
+		if(!checkHpy()) $(this).next(".err").show();
+		else $(this).next(".err").hide();
+	});
+
+	$("#btn_calculate").on("click",function(){
+		//validate the input
+		if(checkSalary() && checkHpy() && checkVpy() && checkDpw() && checkHpw()){
+			calculate();
+		}
+	});
+</script>

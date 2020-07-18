@@ -1,0 +1,16 @@
+Read Me:
+
+"task_1" is the Java implementation of Task 1: Programs. As this task didn't specify the UI, I created this Java console application to read the input from the text file and then sort and pull. 
+This Java implementation focuses more on the design of data structs as well as the manual implementation of quicksort function;
+
+
+"task 1" is the JavaScript implementation of Task 1: Programs. I used JavaScript and HTML to build a simple UI so that the user can easily modify the search thresholds.
+All the data in this JavaScript implementation is inputted in JSON format.
+
+
+"task 2" is the JavaScript implementation of Task 2: Wage Calculator. As the description of this task isn't very clear about the logic to handle vacations and holidays, I assume that when a user inputs the hourly/weekly/monthly/annual salary, it will be eventually converted into average daily salary. In this case, I can deduct the days of vacations and holidays from the total (annual) salary and re-calculate all the salaries based on the deducted value. Therefore, the output will always be smaller than what the user has inputted.
+
+
+Task 3: Broken Page
+Please refer to my codenpen: https://codepen.io/zeuigwbt/full/eYJQVor
+As codenpen overwrites the <body> tag of the page, I cannot toggle the mobile menu ($("body").toggleClass("g-mobile-nav-open") will trigger nothing). However, I don't think it a broken feature, as the same code works properly on the model page.

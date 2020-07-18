@@ -1,0 +1,11 @@
+package task_1;
+import java.util.*;
+import task_1.Programs.Program;
+
+public class Main {
+	 public static void main(String[] args) {
+		 List<Program> list = new ArrayList<Program>();
+		 task_1.Programs.Program p1 = new task_1.Programs.Program("Information Technology", 1, true);
+		 
+	 }
+}

@@ -1,0 +1,13 @@
+body{
+	padding: 20px;
+	text-align: center;
+}
+#container{
+	text-align: left;
+}
+#infotable, #resulttable{
+	width: 100%;
+}
+.commands{
+	padding-top:10px;
+}
